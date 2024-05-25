@@ -5,6 +5,7 @@ import {
   editQuiz,
 } from '../../assets/localStorageAsset';
 import { Quiz } from '../../types';
+import AddQuizForm from '../AddQuiz/AddQuizForm';
 
 const QuizList: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -27,9 +28,14 @@ const QuizList: React.FC = () => {
     }
   };
 
+  const handleAddQuiz = () => {
+    setQuizzes(getQuizzes());
+  };
+
   return (
     <div>
       <h1 className="text-2xl">Available Quizzes</h1>
+      <AddQuizForm onAddQuiz={handleAddQuiz} />
       <ul>
         {quizzes.map((quiz) => (
           <li key={quiz.id}>

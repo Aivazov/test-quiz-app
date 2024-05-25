@@ -1,13 +1,19 @@
+// src/components/AddQuizForm.tsx
 import React, { useState } from 'react';
 import { addQuiz } from '../../assets/localStorageAsset';
 
-const AddQuizForm: React.FC = () => {
+interface AddQuizFormProps {
+  onAddQuiz: () => void;
+}
+
+const AddQuizForm: React.FC<AddQuizFormProps> = ({ onAddQuiz }) => {
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     addQuiz(title);
     setTitle('');
+    onAddQuiz(); // Обновляем список викторин
   };
 
   return (
