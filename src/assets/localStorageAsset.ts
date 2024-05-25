@@ -1,30 +1,32 @@
 // src/utils/localStorageUtils.ts
 import { Quiz } from '../types';
 
-const QUIZZES_KEY = 'quizzes';
-
 export const getQuizzes = (): Quiz[] => {
-  const quizzes = localStorage.getItem(QUIZZES_KEY);
+  const quizzes = localStorage.getItem('quizzes');
   return quizzes ? JSON.parse(quizzes) : [];
 };
 
-export const addQuiz = (title: string) => {
+export const addQuiz = (quiz: Quiz): void => {
   const quizzes = getQuizzes();
-  const newQuiz: Quiz = { id: Date.now().toString(), title, questions: [] };
-  quizzes.push(newQuiz);
-  localStorage.setItem(QUIZZES_KEY, JSON.stringify(quizzes));
+  quizzes.push(quiz);
+  localStorage.setItem('quizzes', JSON.stringify(quizzes));
 };
 
-export const deleteQuiz = (id: string) => {
-  const quizzes = getQuizzes().filter((quiz) => quiz.id !== id);
-  localStorage.setItem(QUIZZES_KEY, JSON.stringify(quizzes));
-};
-
-export const editQuiz = (id: string, newTitle: string) => {
+export const editQuiz = (
+  id: string,
+  title: string,
+  questions: Quiz['questions']
+): void => {
   const quizzes = getQuizzes();
-  const quiz = quizzes.find((quiz) => quiz.id === id);
-  if (quiz) {
-    quiz.title = newTitle;
-    localStorage.setItem(QUIZZES_KEY, JSON.stringify(quizzes));
+  const quizIndex = quizzes.findIndex((quiz) => quiz.id === id);
+  if (quizIndex !== -1) {
+    quizzes[quizIndex] = { id, title, questions };
+    localStorage.setItem('quizzes', JSON.stringify(quizzes));
   }
+};
+
+export const deleteQuiz = (id: string): void => {
+  const quizzes = getQuizzes();
+  const updatedQuizzes = quizzes.filter((quiz) => quiz.id !== id);
+  localStorage.setItem('quizzes', JSON.stringify(updatedQuizzes));
 };

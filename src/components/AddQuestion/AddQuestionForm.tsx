@@ -2,11 +2,6 @@
 import React, { useState } from 'react';
 import { Question, Answer } from '../../types';
 
-// interface Answer {
-//   text: string;
-//   isCorrect: boolean;
-// }
-
 interface AddQuestionFormProps {
   addQuestion: (question: Question) => void;
 }
@@ -14,17 +9,30 @@ interface AddQuestionFormProps {
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
   const [questionText, setQuestionText] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const [answerText, setAnswerText] = useState('');
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [newAnswerText, setNewAnswerText] = useState('');
+  const [newAnswerIsCorrect, setNewAnswerIsCorrect] = useState(false);
 
   const handleAddAnswer = () => {
-    setAnswers([...answers, { text: answerText, isCorrect }]);
-    setAnswerText('');
-    setIsCorrect(false);
+    if (newAnswerText.trim() !== '') {
+      setAnswers([
+        ...answers,
+        { text: newAnswerText, isCorrect: newAnswerIsCorrect },
+      ]);
+      setNewAnswerText('');
+      setNewAnswerIsCorrect(false);
+    }
+  };
+
+  const handleRemoveAnswer = (index: number) => {
+    setAnswers(answers.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!answers.some((answer) => answer.isCorrect)) {
+      alert('Please select a correct answer.');
+      return;
+    }
     addQuestion({ text: questionText, answers });
     setQuestionText('');
     setAnswers([]);
@@ -33,48 +41,58 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Question:</label>
+        <label>Question Text</label>
         <input
           type="text"
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
-          className="border p-2"
+          className="border p-2 w-full"
         />
       </div>
       <div>
-        <label>Answer:</label>
-        <input
-          type="text"
-          value={answerText}
-          onChange={(e) => setAnswerText(e.target.value)}
-          className="border p-2"
-        />
-        <label>
+        <label>Answers</label>
+        {answers.map((answer, index) => (
+          <div key={index} className="flex items-center">
+            <span>
+              {answer.text} {answer.isCorrect && '(Correct)'}
+            </span>
+            <button
+              type="button"
+              onClick={() => handleRemoveAnswer(index)}
+              className="ml-2 text-red-500"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <div className="flex items-center">
           <input
-            type="checkbox"
-            checked={isCorrect}
-            onChange={(e) => setIsCorrect(e.target.checked)}
+            type="text"
+            value={newAnswerText}
+            onChange={(e) => setNewAnswerText(e.target.value)}
+            className="border p-2 w-full"
           />
-          Correct
-        </label>
-        <button
-          type="button"
-          onClick={handleAddAnswer}
-          className="ml-2 bg-green-500 text-white p-2"
-        >
-          Add Answer
-        </button>
+          <label className="ml-2">
+            <input
+              type="checkbox"
+              checked={newAnswerIsCorrect}
+              onChange={(e) => setNewAnswerIsCorrect(e.target.checked)}
+              className="ml-2"
+            />
+            Correct
+          </label>
+          <button
+            type="button"
+            onClick={handleAddAnswer}
+            className="ml-2 text-blue-500"
+          >
+            Add Answer
+          </button>
+        </div>
       </div>
-      <button type="submit" className="mt-2 bg-blue-500 text-white p-2">
+      <button type="submit" className="bg-blue-500 text-white p-2 mt-2">
         Add Question
       </button>
-      <ul>
-        {answers.map((answer, index) => (
-          <li key={index}>
-            {answer.text} {answer.isCorrect ? '(Correct)' : ''}
-          </li>
-        ))}
-      </ul>
     </form>
   );
 };

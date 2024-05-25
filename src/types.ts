@@ -6,6 +6,7 @@ export interface Answer {
 export interface Question {
   text: string;
   answers: Answer[];
+  // correctAnswerIndex: number;
 }
 
 export interface Quiz {

@@ -1,9 +1,13 @@
-// src/components/AddQuiz/AddQuizForm.tsx
+// src/components/AddQuiz.tsx
 import React, { useState } from 'react';
 import { Quiz } from '../../types';
 import { addQuiz } from '../../assets/localStorageAsset';
 
-const AddQuizForm: React.FC = () => {
+interface AddQuizProps {
+  onAddQuiz: (quiz: Quiz) => void;
+}
+
+const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
   const [title, setTitle] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,6 +18,7 @@ const AddQuizForm: React.FC = () => {
       questions: [],
     };
     addQuiz(newQuiz);
+    onAddQuiz(newQuiz);
     setTitle('');
   };
 
@@ -35,4 +40,4 @@ const AddQuizForm: React.FC = () => {
   );
 };
 
-export default AddQuizForm;
+export default AddQuiz;
