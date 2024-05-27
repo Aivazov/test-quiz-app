@@ -10,9 +10,7 @@ interface QuizListProps {
 const QuizList: React.FC<QuizListProps> = ({ quizzes }) => {
   return (
     <div>
-      <Link to="/add" className="bg-green-500 text-white p-2 rounded">
-        Add Quiz
-      </Link>
+      <Link to="/add" className="bg-green-500 text-white p-2 rounded">Add Quiz</Link>
       <ul>
         {quizzes.map((quiz) => (
           <li key={quiz.id}>

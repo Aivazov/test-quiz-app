@@ -1,3 +1,4 @@
+// src/types.ts
 export interface Answer {
   text: string;
   isCorrect: boolean;
@@ -6,7 +7,7 @@ export interface Answer {
 export interface Question {
   text: string;
   answers: Answer[];
-  // correctAnswerIndex: number;
+  correctAnswerIndex: number;
 }
 
 export interface Quiz {

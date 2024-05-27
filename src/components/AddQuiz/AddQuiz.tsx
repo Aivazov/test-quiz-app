@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Quiz } from '../../types';
 import { addQuiz } from '../../assets/localStorageAsset';
+import BackToMainBtn from '../BackToMainBtn/BackToMainBtn';
 
 interface AddQuizProps {
   onAddQuiz: (quiz: Quiz) => void;
@@ -24,6 +25,7 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <BackToMainBtn />
       <div>
         <label>Quiz Title</label>
         <input
