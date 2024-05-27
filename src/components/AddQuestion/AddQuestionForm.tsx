@@ -1,4 +1,4 @@
-// src/components/AddQuestionForm.tsx
+// src/components/AddQuestion/AddQuestionForm.tsx
 import React, { useState } from 'react';
 import { Question, Answer } from '../../types';
 
@@ -8,34 +8,37 @@ interface AddQuestionFormProps {
 
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
   const [questionText, setQuestionText] = useState('');
-  const [answers, setAnswers] = useState<Answer[]>([]);
-  const [newAnswerText, setNewAnswerText] = useState('');
-  const [newAnswerIsCorrect, setNewAnswerIsCorrect] = useState(false);
+  const [answers, setAnswers] = useState<Answer[]>([{ text: '', isCorrect: false }]);
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
 
-  const handleAddAnswer = () => {
-    if (newAnswerText.trim() !== '') {
-      setAnswers([
-        ...answers,
-        { text: newAnswerText, isCorrect: newAnswerIsCorrect },
-      ]);
-      setNewAnswerText('');
-      setNewAnswerIsCorrect(false);
-    }
+  const handleAnswerChange = (index: number, text: string) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = { ...newAnswers[index], text };
+    setAnswers(newAnswers);
   };
 
-  const handleRemoveAnswer = (index: number) => {
-    setAnswers(answers.filter((_, i) => i !== index));
+  const handleAddAnswer = () => {
+    setAnswers([...answers, { text: '', isCorrect: false }]);
+  };
+
+  const handleCorrectAnswerChange = (index: number) => {
+    setCorrectAnswerIndex(index);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!answers.some((answer) => answer.isCorrect)) {
-      alert('Please select a correct answer.');
+    if (correctAnswerIndex === null) {
+      alert('Please select the correct answer');
       return;
     }
-    addQuestion({ text: questionText, answers });
+    const updatedAnswers = answers.map((answer, index) => ({
+      ...answer,
+      isCorrect: index === correctAnswerIndex,
+    }));
+    addQuestion({ text: questionText, answers: updatedAnswers, correctAnswerIndex });
     setQuestionText('');
-    setAnswers([]);
+    setAnswers([{ text: '', isCorrect: false }]);
+    setCorrectAnswerIndex(null);
   };
 
   return (
@@ -49,48 +52,28 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
           className="border p-2 w-full"
         />
       </div>
-      <div>
-        <label>Answers</label>
-        {answers.map((answer, index) => (
-          <div key={index} className="flex items-center">
-            <span>
-              {answer.text} {answer.isCorrect && '(Correct)'}
-            </span>
-            <button
-              type="button"
-              onClick={() => handleRemoveAnswer(index)}
-              className="ml-2 text-red-500"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-        <div className="flex items-center">
+      {answers.map((answer, index) => (
+        <div key={index}>
+          <label>Answer {index + 1}</label>
           <input
             type="text"
-            value={newAnswerText}
-            onChange={(e) => setNewAnswerText(e.target.value)}
+            value={answer.text}
+            onChange={(e) => handleAnswerChange(index, e.target.value)}
             className="border p-2 w-full"
           />
-          <label className="ml-2">
-            <input
-              type="checkbox"
-              checked={newAnswerIsCorrect}
-              onChange={(e) => setNewAnswerIsCorrect(e.target.checked)}
-              className="ml-2"
-            />
-            Correct
-          </label>
-          <button
-            type="button"
-            onClick={handleAddAnswer}
-            className="ml-2 text-blue-500"
-          >
-            Add Answer
-          </button>
+          <input
+            type="radio"
+            name="correctAnswer"
+            checked={index === correctAnswerIndex}
+            onChange={() => handleCorrectAnswerChange(index)}
+          />
+          Correct
         </div>
-      </div>
-      <button type="submit" className="bg-blue-500 text-white p-2 mt-2">
+      ))}
+      <button type="button" onClick={handleAddAnswer} className="bg-blue-500 text-white p-2 mt-2">
+        Add Answer
+      </button>
+      <button type="submit" className="bg-green-500 text-white p-2 mt-2">
         Add Question
       </button>
     </form>

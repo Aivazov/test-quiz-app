@@ -1,5 +1,5 @@
 // src/components/Quiz/QuizContainer.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Quiz, Question } from '../../types';
 import QuizComponent from '../Quiz/Quiz';

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import QuizList from './components/QuizList/QuizList';
 import AddQuiz from './components/AddQuiz/AddQuiz';
-import QuizComponent from './components/Quiz/Quiz';
+import QuizContainer from './components/QuizContainer/QuizContainer';
 import { Quiz } from './types';
 import { getQuizzes, addQuiz } from './assets/localStorageAsset';
 
@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<QuizList quizzes={quizzes} />} />
           <Route path="/add" element={<AddQuiz onAddQuiz={handleAddQuiz} />} />
-          <Route path="/quiz/:id" element={<QuizComponent />} />
+          <Route path="/quiz/:id" element={<QuizContainer />} />
         </Routes>
       </div>
     </Router>
