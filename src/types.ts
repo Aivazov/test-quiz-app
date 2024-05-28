@@ -15,3 +15,8 @@ export interface Quiz {
   title: string;
   questions: Question[];
 }
+
+export interface AddQuizProps {
+  onAddQuiz: (quiz: Quiz) => void;
+  quizzes: Quiz[]; // Добавляем свойство quizzes
+}

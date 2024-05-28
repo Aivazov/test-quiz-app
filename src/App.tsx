@@ -30,7 +30,7 @@ const App: React.FC = () => {
             <Route path="/" element={<QuizList quizzes={quizzes} />} />
             <Route
               path="/add"
-              element={<AddQuiz onAddQuiz={handleAddQuiz} />}
+              element={<AddQuiz onAddQuiz={handleAddQuiz} quizzes={quizzes} />}
             />
             <Route path="/quiz/:id" element={<QuizContainer />} />
           </Routes>

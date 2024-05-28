@@ -2,13 +2,13 @@
 import React from 'react';
 import { Quiz } from '../../types';
 import { addQuiz } from '../../assets/localStorageAsset';
-// import BackToMainBtn from '../BackToMainBtn/BackToMainBtn';
 
 interface AddQuizProps {
   onAddQuiz: (quiz: Quiz) => void;
+  quizzes: Quiz[]; // Добавлен массив викторин для проверки уникальности названия
 }
 
-const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
+const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
   const [title, setTitle] = React.useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,6 +17,17 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
       console.log('No quiz title');
       return;
     }
+
+    // Проверка уникальности названия викторины
+    const isDuplicateTitle = quizzes.some(
+      (quiz) => quiz.title.toLowerCase() === title.toLowerCase()
+    );
+    if (isDuplicateTitle) {
+      console.log('Quiz with this title already exists');
+      alert('Quiz with this title already exists');
+      return;
+    }
+
     const newQuiz: Quiz = {
       id: Date.now().toString(),
       title,
@@ -29,7 +40,6 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <BackToMainBtn /> */}
       <div>
         <label className="text-3xl w-[40%]">Quiz Title</label>
         <input
