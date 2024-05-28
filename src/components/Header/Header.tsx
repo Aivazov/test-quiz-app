@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { LuSquareStack } from 'react-icons/lu';
 import { CgAddR } from 'react-icons/cg';
 import { styled } from '@mui/material/styles';
@@ -36,11 +36,11 @@ const ColorButton = styled(Button)<ButtonProps & { buttonSize: number }>(
 
 const ColorButton2 = styled(Button)<ButtonProps & { buttonSize: number }>(
   ({ theme, buttonSize }) => ({
-    color: theme.palette.getContrastText(green[400]),
+    color: theme.palette.getContrastText(green[100]),
     width: buttonSize,
     height: buttonSize,
     minWidth: buttonSize,
-    backgroundColor: green[400],
+    backgroundColor: green[100],
     '&:hover': {
       backgroundColor: green[500],
     },

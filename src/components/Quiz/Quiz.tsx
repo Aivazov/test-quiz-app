@@ -1,5 +1,5 @@
 // src/components/Quiz/Quiz.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Quiz, Question } from '../../types';
 import AddQuestionForm from '../AddQuestion/AddQuestionForm';
 
@@ -11,7 +11,7 @@ interface QuizProps {
 const QuizComponent: React.FC<QuizProps> = ({ quiz, addQuestion }) => {
   return (
     <div>
-      <h2>{quiz.title}</h2>
+      <h2 className="text-3xl w-[40%]">{quiz.title}</h2>
       <AddQuestionForm addQuestion={addQuestion} />
       {quiz.questions.map((question, index) => (
         <div key={index}>

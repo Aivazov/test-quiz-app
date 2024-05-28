@@ -24,8 +24,8 @@ const App: React.FC = () => {
     <Router>
       <div className="container mx-auto p-4 flex flex-row w-full">
         <Header />
-        <main className="py-[10px] px-[30px]">
-          <h1 className="text-3xl mb-4">Quiz App</h1>
+        <main className="py-[10px] px-[30px] w-full">
+          {/* <h1 className="text-3xl mb-4">Quiz App</h1> */}
           <Routes>
             <Route path="/" element={<QuizList quizzes={quizzes} />} />
             <Route

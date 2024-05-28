@@ -1,18 +1,22 @@
 // src/components/AddQuiz.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Quiz } from '../../types';
 import { addQuiz } from '../../assets/localStorageAsset';
-import BackToMainBtn from '../BackToMainBtn/BackToMainBtn';
+// import BackToMainBtn from '../BackToMainBtn/BackToMainBtn';
 
 interface AddQuizProps {
   onAddQuiz: (quiz: Quiz) => void;
 }
 
 const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = React.useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (title.trim() === '') {
+      console.log('No quiz title');
+      return;
+    }
     const newQuiz: Quiz = {
       id: Date.now().toString(),
       title,
@@ -25,9 +29,9 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <BackToMainBtn />
+      {/* <BackToMainBtn /> */}
       <div>
-        <label>Quiz Title</label>
+        <label className="text-3xl w-[40%]">Quiz Title</label>
         <input
           type="text"
           value={title}
