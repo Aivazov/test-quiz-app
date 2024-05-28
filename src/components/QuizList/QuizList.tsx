@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Quiz } from '../../types';
 
+import { BsThreeDotsVertical } from 'react-icons/bs';
+
 interface QuizListProps {
   quizzes: Quiz[];
 }
@@ -35,11 +37,13 @@ const QuizList: React.FC<QuizListProps> = ({ quizzes }) => {
         {filteredQuizzes.map((quiz) => (
           <li
             key={quiz.id}
-            className="border-black border-2 rounded-md text-xl py-2 px-3"
+            className="border-black border-2 rounded-md text-xl py-2 px-3 flex justify-between items-center"
           >
             <Link to={`/quiz/${quiz.id}`} className="text-blue-500">
               {quiz.title}
             </Link>
+
+            <BsThreeDotsVertical />
           </li>
         ))}
       </ul>

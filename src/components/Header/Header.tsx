@@ -40,9 +40,9 @@ const ColorButton2 = styled(Button)<ButtonProps & { buttonSize: number }>(
     width: buttonSize,
     height: buttonSize,
     minWidth: buttonSize,
-    backgroundColor: green[100],
+    backgroundColor: 'transparent',
     '&:hover': {
-      backgroundColor: green[500],
+      backgroundColor: green[300],
     },
   })
 );
@@ -60,7 +60,7 @@ const Header = ({ buttonSize = 50 }: Props) => {
 
       <Link to="/add" className="">
         <ColorButton2 variant="contained" buttonSize={buttonSize}>
-          <IconContext.Provider value={{ color: 'white', size: '30px' }}>
+          <IconContext.Provider value={{ color: 'brown', size: '30px' }}>
             <CgAddR />
           </IconContext.Provider>
         </ColorButton2>
