@@ -31,6 +31,9 @@ const ColorButton = styled(Button)<ButtonProps & { buttonSize: number }>(
     '&:hover': {
       backgroundColor: purple[100],
     },
+    '&:focus': {
+      backgroundColor: purple[100],
+    },
   })
 );
 
@@ -42,6 +45,9 @@ const ColorButton2 = styled(Button)<ButtonProps & { buttonSize: number }>(
     minWidth: buttonSize,
     backgroundColor: 'transparent',
     '&:hover': {
+      backgroundColor: green[300],
+    },
+    '&:focus': {
       backgroundColor: green[300],
     },
   })
