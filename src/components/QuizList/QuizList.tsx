@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Quiz } from '../../types';
 
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { MdOutlineModeEditOutline } from 'react-icons/md';
+
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 interface QuizListProps {
@@ -44,8 +47,18 @@ const QuizList: React.FC<QuizListProps> = ({ quizzes, onDeleteQuiz }) => {
               {quiz.title}
             </Link>
 
-            <BsThreeDotsVertical />
-            <button onClick={() => onDeleteQuiz(quiz.id)}>Delete</button>
+            {/* <BsThreeDotsVertical /> */}
+            <div className='flex flex-col justify-center items-center'>
+              <Link to={`/quiz/${quiz.id}`}>
+                <button>
+                  <MdOutlineModeEditOutline />
+                </button>
+              </Link>
+
+              <button onClick={() => onDeleteQuiz(quiz.id)}>
+                <RiDeleteBin6Line />
+              </button>
+            </div>
           </li>
         ))}
       </ul>

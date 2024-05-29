@@ -2,7 +2,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Quiz, Question } from '../../types';
-import QuizComponent from '../Quiz/Quiz';
+import QuizComponent from '../QuizComponent/QuizComponent';
 import { getQuizzes, editQuiz } from '../../assets/localStorageAsset';
 
 const QuizContainer: React.FC = () => {

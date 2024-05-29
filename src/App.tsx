@@ -19,14 +19,20 @@ const App: React.FC = () => {
     const existingQuiz = quizzes.find((q) => q.id === quiz.id);
 
     if (!existingQuiz) {
+      //checking for avoid double rendering of the quizzes
       addQuiz(quiz);
       setQuizzes([...quizzes, quiz]);
     }
   };
 
   const handleDeleteQuiz = (id: string) => {
-    deleteQuiz(id);
-    setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
+    const isDeleting = window.confirm(
+      'Are you sure you want to delete this Quiz?'
+    );
+    if (isDeleting) {
+      deleteQuiz(id);
+      setQuizzes(quizzes.filter((quiz) => quiz.id !== id));
+    }
   };
 
   return (
@@ -47,6 +53,10 @@ const App: React.FC = () => {
               element={<AddQuiz onAddQuiz={handleAddQuiz} quizzes={quizzes} />}
             />
             <Route path='/quiz/:id' element={<QuizContainer />} />
+            <Route
+              path='/quiz/:id/add-question'
+              element={<AddQuestionForm addQuestion={addQuestion} />}
+            />
           </Routes>
         </main>
       </div>

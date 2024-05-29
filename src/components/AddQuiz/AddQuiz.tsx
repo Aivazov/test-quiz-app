@@ -16,12 +16,13 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    //checking if Quiz Input Value field is empty
     if (title.trim() === '') {
       alert('No quiz title');
       return;
     }
 
-    // Проверка уникальности названия викторины
+    // checking if the name of the Quiz is unique
     const isDuplicateTitle = quizzes.some(
       (quiz) => quiz.title.toLowerCase() === title.toLowerCase()
     );
@@ -31,6 +32,7 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
       return;
     }
 
+    //creating new Quiz
     const newQuiz: Quiz = {
       id: Date.now().toString(),
       title,
@@ -39,12 +41,12 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
     addQuiz(newQuiz);
     onAddQuiz(newQuiz);
     setTitle('');
-    navigate(`/quiz/${newQuiz.id}`);
+    navigate(`/quiz/${newQuiz.id}`); //redirect to Quiz editing component
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div className='flex flex-col gap-5 w-full mb-5'>
         <label className='text-3xl w-[40%]'>Quiz Title</label>
         <input
           type='text'
@@ -53,7 +55,7 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
           className='border p-2 w-full'
         />
       </div>
-      <button type='submit' className='bg-blue-500 text-white p-2 mt-2'>
+      <button type='submit' className='bg-blue-500 text-white p-2'>
         Add Quiz
       </button>
     </form>

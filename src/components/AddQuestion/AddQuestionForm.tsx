@@ -1,12 +1,15 @@
 // src/components/AddQuestion/AddQuestionForm.tsx
 import React, { useState } from 'react';
 import { Question, Answer } from '../../types';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface AddQuestionFormProps {
   addQuestion: (question: Question) => void;
 }
 
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const [questionText, setQuestionText] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([
     { text: '', isCorrect: false },
@@ -85,8 +88,11 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
       >
         Add Answer
       </button>
-      <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
+      {/* <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
         Add Question
+      </button> */}
+      <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
+        Apply
       </button>
     </form>
   );
