@@ -8,8 +8,12 @@ export const getQuizzes = (): Quiz[] => {
 
 export const addQuiz = (quiz: Quiz): void => {
   const quizzes = getQuizzes();
-  quizzes.push(quiz);
-  localStorage.setItem('quizzes', JSON.stringify(quizzes));
+  const existingQuiz = quizzes.find(q => q.id === quiz.id)
+
+  if (!existingQuiz) {
+    quizzes.push(quiz);
+    localStorage.setItem('quizzes', JSON.stringify(quizzes));
+  }
 };
 
 export const editQuiz = (
@@ -18,11 +22,15 @@ export const editQuiz = (
   questions: Quiz['questions']
 ): void => {
   const quizzes = getQuizzes();
-  const quizIndex = quizzes.findIndex((quiz) => quiz.id === id);
-  if (quizIndex !== -1) {
-    quizzes[quizIndex] = { id, title, questions };
-    localStorage.setItem('quizzes', JSON.stringify(quizzes));
-  }
+  // const quizIndex = quizzes.findIndex((quiz) => quiz.id === id);
+  // if (quizIndex !== -1) {
+  //   quizzes[quizIndex] = { id, title, questions };
+  //   localStorage.setItem('quizzes', JSON.stringify(quizzes));
+  // }
+  const updatedQuizzes = quizzes.map(quiz => 
+    quiz.id === id ? { ...quiz, title, questions } : quiz
+  );
+  localStorage.setItem('quizzes', JSON.stringify(updatedQuizzes));
 };
 
 export const deleteQuiz = (id: string): void => {

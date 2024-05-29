@@ -8,8 +8,12 @@ interface AddQuestionFormProps {
 
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
   const [questionText, setQuestionText] = useState('');
-  const [answers, setAnswers] = useState<Answer[]>([{ text: '', isCorrect: false }]);
-  const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(null);
+  const [answers, setAnswers] = useState<Answer[]>([
+    { text: '', isCorrect: false },
+  ]);
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number | null>(
+    null
+  );
 
   const handleAnswerChange = (index: number, text: string) => {
     const newAnswers = [...answers];
@@ -42,34 +46,38 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
       <div>
         <label>Question Text</label>
         <input
-          type="text"
+          type='text'
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
-          className="border p-2 w-full"
+          className='border p-2 w-full'
         />
       </div>
       {answers.map((answer, index) => (
         <div key={index}>
           <label>Answer {index + 1}</label>
           <input
-            type="text"
+            type='text'
             value={answer.text}
             onChange={(e) => handleAnswerChange(index, e.target.value)}
-            className="border p-2 w-full"
+            className='border p-2 w-full'
           />
           <input
-            type="radio"
-            name="correctAnswer"
+            type='radio'
+            name='correctAnswer'
             checked={index === correctAnswerIndex}
             onChange={() => handleCorrectAnswerChange(index)}
           />
           Correct
         </div>
       ))}
-      <button type="button" onClick={handleAddAnswer} className="bg-blue-500 text-white p-2 mt-2">
+      <button
+        type='button'
+        onClick={handleAddAnswer}
+        className='bg-blue-500 text-white p-2 mt-2'
+      >
         Add Answer
       </button>
-      <button type="submit" className="bg-green-500 text-white p-2 mt-2">
+      <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
         Add Question
       </button>
     </form>

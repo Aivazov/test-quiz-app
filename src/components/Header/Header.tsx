@@ -55,17 +55,17 @@ const ColorButton2 = styled(Button)<ButtonProps & { buttonSize: number }>(
 
 const Header = ({ buttonSize = 50 }: Props) => {
   return (
-    <div className="w-[100px] flex flex-col justify-start items-center pt-5 border-r-[1px] border-black h-screen gap-8">
-      <Link to="/">
-        <ColorButton variant="contained" buttonSize={buttonSize}>
+    <div className='w-[100px] flex flex-col justify-start items-center pt-5 border-r-[1px] border-black h-screen gap-8'>
+      <Link to='/'>
+        <ColorButton variant='contained' buttonSize={buttonSize}>
           <IconContext.Provider value={{ color: 'brown', size: '30px' }}>
             <LuSquareStack />
           </IconContext.Provider>
         </ColorButton>
       </Link>
 
-      <Link to="/add" className="">
-        <ColorButton2 variant="contained" buttonSize={buttonSize}>
+      <Link to='/add' className=''>
+        <ColorButton2 variant='contained' buttonSize={buttonSize}>
           <IconContext.Provider value={{ color: 'brown', size: '30px' }}>
             <CgAddR />
           </IconContext.Provider>
