@@ -54,6 +54,21 @@ const App: React.FC = () => {
     setQuizzes(updatedQuizzes);
   };
 
+  const handleDeleteQuestion = (quizId: string, questionIndex: number) => {
+    const updatedQuizzes = quizzes.map((quiz) => {
+      if (quiz.id === quizId) {
+        const updatedQuestions = quiz.questions.filter(
+          (_, index) => index !== questionIndex
+        );
+        const updatedQuiz = { ...quiz, questions: updatedQuestions };
+        editQuiz(quizId, updatedQuiz.title, updatedQuestions);
+        return updatedQuiz;
+      }
+      return quiz;
+    });
+    setQuizzes(updatedQuizzes);
+  };
+
   return (
     <Router>
       <div className="container mx-auto p-4 flex flex-row w-full">
@@ -72,7 +87,12 @@ const App: React.FC = () => {
             />
             <Route
               path="/quiz/:id"
-              element={<QuizContainer addQuestion={handleAddQuestion} />}
+              element={
+                <QuizContainer
+                  addQuestion={handleAddQuestion}
+                  deleteQuestion={handleDeleteQuestion}
+                />
+              }
             />
             <Route
               path="/quiz/:id/add-question"

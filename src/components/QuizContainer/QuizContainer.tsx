@@ -7,9 +7,13 @@ import { getQuizzes } from '../../assets/localStorageAsset';
 
 interface QuizContainerProps {
   addQuestion: (quizId: string, question: Question) => void;
+  deleteQuestion: (quizId: string, questionIndex: number) => void;
 }
 
-const QuizContainer: React.FC<QuizContainerProps> = ({ addQuestion }) => {
+const QuizContainer: React.FC<QuizContainerProps> = ({
+  addQuestion,
+  deleteQuestion,
+}) => {
   const { id } = useParams<{ id: string }>();
   const quizzes = getQuizzes();
   const quiz = quizzes.find((q) => q.id === id);
@@ -22,6 +26,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({ addQuestion }) => {
     <QuizComponent
       quiz={quiz}
       addQuestion={(question) => addQuestion(quiz.id, question)}
+      deleteQuestion={(questionIndex) => deleteQuestion(quiz.id, questionIndex)}
     />
   );
 };

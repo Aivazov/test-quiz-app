@@ -1,22 +1,46 @@
 // src/components/QuizComponent/QuizComponent.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Quiz, Question } from '../../types';
-// import AddQuestionForm from '../AddQuestion/AddQuestionForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
 interface QuizProps {
   quiz: Quiz;
   addQuestion: (question: Question) => void;
+  deleteQuestion: (questionIndex: number) => void;
 }
 
-const QuizComponent: React.FC<QuizProps> = ({ quiz, addQuestion }) => {
+const QuizComponent: React.FC<QuizProps> = ({
+  quiz,
+  addQuestion,
+  deleteQuestion,
+}) => {
   const navigate = useNavigate();
-  console.log(quiz);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [questionIndexToDelete, setQuestionIndexToDelete] = useState<
+    number | null
+  >(null);
 
   const handleAddQuestionClick = () => {
     navigate(`/quiz/${quiz.id}/add-question`);
+  };
+
+  const handleDeleteButtonClick = (index: number) => {
+    setQuestionIndexToDelete(index);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (questionIndexToDelete !== null) {
+      deleteQuestion(questionIndexToDelete);
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -28,7 +52,6 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, addQuestion }) => {
       >
         Add Question
       </button>
-      {/* <AddQuestionForm addQuestion={addQuestion} /> */}
       <ul className="flex flex-col justify-center gap-4 mt-4">
         {quiz.questions.map((question, index) => (
           <li
@@ -42,18 +65,21 @@ const QuizComponent: React.FC<QuizProps> = ({ quiz, addQuestion }) => {
                   <MdOutlineModeEditOutline />
                 </button>
               </Link>
-              <button>
+              <button onClick={() => handleDeleteButtonClick(index)}>
                 <RiDeleteBin6Line />
               </button>
             </div>
-            {/* <ul>
-              {question.answers.map((answer, answerIndex) => (
-                <li key={answerIndex}>{answer.text}</li>
-              ))}
-            </ul> */}
           </li>
         ))}
       </ul>
+
+      {isModalOpen && (
+        <ConfirmModal
+          message="Are you sure you want to delete the question?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 };
