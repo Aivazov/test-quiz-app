@@ -5,6 +5,7 @@ import QuizList from './components/QuizList/QuizList';
 import AddQuiz from './components/AddQuiz/AddQuiz';
 import QuizContainer from './components/QuizContainer/QuizContainer';
 import AddQuestionForm from './components/AddQuestion/AddQuestionForm';
+import EditQuestionForm from './components/EditQuestionForm/EditQuestionForm';
 import { Quiz, Question } from './types';
 import {
   getQuizzes,
@@ -54,6 +55,25 @@ const App: React.FC = () => {
     setQuizzes(updatedQuizzes);
   };
 
+  const handleEditQuestion = (
+    quizId: string,
+    questionIndex: number,
+    updatedQuestion: Question
+  ) => {
+    const updatedQuizzes = quizzes.map((quiz) => {
+      if (quiz.id === quizId) {
+        const updatedQuestions = quiz.questions.map((question, index) =>
+          index === questionIndex ? updatedQuestion : question
+        );
+        const updatedQuiz = { ...quiz, questions: updatedQuestions };
+        editQuiz(quizId, updatedQuiz.title, updatedQuestions);
+        return updatedQuiz;
+      }
+      return quiz;
+    });
+    setQuizzes(updatedQuizzes);
+  };
+
   const handleDeleteQuestion = (quizId: string, questionIndex: number) => {
     const updatedQuizzes = quizzes.map((quiz) => {
       if (quiz.id === quizId) {
@@ -71,22 +91,22 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="container mx-auto p-4 flex flex-row w-full">
+      <div className='container mx-auto p-4 flex flex-row w-full'>
         <Header />
-        <main className="py-[10px] px-[30px] w-full">
+        <main className='py-[10px] px-[30px] w-full'>
           <Routes>
             <Route
-              path="/"
+              path='/'
               element={
                 <QuizList quizzes={quizzes} onDeleteQuiz={handleDeleteQuiz} />
               }
             />
             <Route
-              path="/add"
+              path='/add'
               element={<AddQuiz onAddQuiz={handleAddQuiz} quizzes={quizzes} />}
             />
             <Route
-              path="/quiz/:id"
+              path='/quiz/:id'
               element={
                 <QuizContainer
                   addQuestion={handleAddQuestion}
@@ -95,8 +115,12 @@ const App: React.FC = () => {
               }
             />
             <Route
-              path="/quiz/:id/add-question"
+              path='/quiz/:id/add-question'
               element={<AddQuestionForm addQuestion={handleAddQuestion} />}
+            />
+            <Route
+              path='/quiz/:id/edit-question/:questionIndex'
+              element={<EditQuestionForm editQuestion={handleEditQuestion} />}
             />
           </Routes>
         </main>

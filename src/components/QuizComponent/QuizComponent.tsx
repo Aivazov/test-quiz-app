@@ -45,22 +45,22 @@ const QuizComponent: React.FC<QuizProps> = ({
 
   return (
     <div>
-      <h2 className="text-3xl w-[40%]">{quiz.title}</h2>
+      <h2 className='text-3xl w-[40%]'>{quiz.title}</h2>
       <button
         onClick={handleAddQuestionClick}
-        className="bg-blue-500 text-white p-2 mt-2"
+        className='bg-blue-500 text-white p-2 mt-2'
       >
         Add Question
       </button>
-      <ul className="flex flex-col justify-center gap-4 mt-4">
+      <ul className='flex flex-col justify-center gap-4 mt-4'>
         {quiz.questions.map((question, index) => (
           <li
             key={index}
-            className="border-black border-2 rounded-md text-xl py-2 px-3 flex justify-between items-center"
+            className='border-black border-2 rounded-md text-xl py-2 px-3 flex justify-between items-center'
           >
             <p>{question.text}</p>
-            <div className="flex flex-col justify-center items-center">
-              <Link to={`/`}>
+            <div className='flex flex-col justify-center items-center'>
+              <Link to={`/quiz/${quiz.id}/edit-question/${index}`}>
                 <button>
                   <MdOutlineModeEditOutline />
                 </button>
@@ -75,7 +75,7 @@ const QuizComponent: React.FC<QuizProps> = ({
 
       {isModalOpen && (
         <ConfirmModal
-          message="Are you sure you want to delete the question?"
+          message='Are you sure you want to delete the question?'
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
         />
