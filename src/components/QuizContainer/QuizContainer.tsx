@@ -1,31 +1,29 @@
-// src/components/Quiz/QuizContainer.tsx
+// src/components/QuizContainer/QuizContainer.tsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Quiz, Question } from '../../types';
 import QuizComponent from '../QuizComponent/QuizComponent';
-import { getQuizzes, editQuiz } from '../../assets/localStorageAsset';
+import { getQuizzes } from '../../assets/localStorageAsset';
 
-const QuizContainer: React.FC = () => {
+interface QuizContainerProps {
+  addQuestion: (quizId: string, question: Question) => void;
+}
+
+const QuizContainer: React.FC<QuizContainerProps> = ({ addQuestion }) => {
   const { id } = useParams<{ id: string }>();
   const quizzes = getQuizzes();
   const quiz = quizzes.find((q) => q.id === id);
-
-  const addQuestion = (question: Question) => {
-    if (!quiz) return;
-
-    const updatedQuiz = {
-      ...quiz,
-      questions: [...quiz.questions, question],
-    };
-
-    editQuiz(quiz.id, updatedQuiz.title, updatedQuiz.questions);
-  };
 
   if (!quiz) {
     return <div>Quiz not found</div>;
   }
 
-  return <QuizComponent quiz={quiz} addQuestion={addQuestion} />;
+  return (
+    <QuizComponent
+      quiz={quiz}
+      addQuestion={(question) => addQuestion(quiz.id, question)}
+    />
+  );
 };
 
 export default QuizContainer;

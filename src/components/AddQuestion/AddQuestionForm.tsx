@@ -4,12 +4,12 @@ import { Question, Answer } from '../../types';
 import { useNavigate, useParams } from 'react-router-dom';
 
 interface AddQuestionFormProps {
-  addQuestion: (question: Question) => void;
+  addQuestion: (quizId: string, question: Question) => void;
 }
 
 const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
-  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [questionText, setQuestionText] = useState('');
   const [answers, setAnswers] = useState<Answer[]>([
     { text: '', isCorrect: false },
@@ -42,14 +42,14 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
       ...answer,
       isCorrect: index === correctAnswerIndex,
     }));
-    addQuestion({
-      text: questionText,
-      answers: updatedAnswers,
-      correctAnswerIndex,
-    });
-    setQuestionText('');
-    setAnswers([{ text: '', isCorrect: false }]);
-    setCorrectAnswerIndex(null);
+    if (id) {
+      addQuestion(id, {
+        text: questionText,
+        answers: updatedAnswers,
+        correctAnswerIndex,
+      });
+      navigate(`/quiz/${id}`);
+    }
   };
 
   return (
@@ -57,24 +57,24 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
       <div>
         <label>Question Text</label>
         <input
-          type='text'
+          type="text"
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
-          className='border p-2 w-full'
+          className="border p-2 w-full"
         />
       </div>
       {answers.map((answer, index) => (
         <div key={index}>
           <label>Answer {index + 1}</label>
           <input
-            type='text'
+            type="text"
             value={answer.text}
             onChange={(e) => handleAnswerChange(index, e.target.value)}
-            className='border p-2 w-full'
+            className="border p-2 w-full"
           />
           <input
-            type='radio'
-            name='correctAnswer'
+            type="radio"
+            name="correctAnswer"
             checked={index === correctAnswerIndex}
             onChange={() => handleCorrectAnswerChange(index)}
           />
@@ -82,16 +82,13 @@ const AddQuestionForm: React.FC<AddQuestionFormProps> = ({ addQuestion }) => {
         </div>
       ))}
       <button
-        type='button'
+        type="button"
         onClick={handleAddAnswer}
-        className='bg-blue-500 text-white p-2 mt-2'
+        className="bg-blue-500 text-white p-2 mt-2"
       >
         Add Answer
       </button>
-      {/* <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
-        Add Question
-      </button> */}
-      <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
+      <button type="submit" className="bg-green-500 text-white p-2 mt-2">
         Apply
       </button>
     </form>
