@@ -14,6 +14,7 @@ import {
   editQuiz,
 } from './assets/localStorageAsset';
 import Header from './components/Header/Header';
+import NotFound from './pages/NotFound';
 
 const App: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -91,22 +92,22 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className='container mx-auto p-4 flex flex-row w-full'>
+      <div className="container mx-auto p-4 flex flex-row w-full">
         <Header />
-        <main className='py-[10px] px-[30px] w-full'>
+        <main className="py-[10px] px-[30px] w-full">
           <Routes>
             <Route
-              path='/'
+              path="/"
               element={
                 <QuizList quizzes={quizzes} onDeleteQuiz={handleDeleteQuiz} />
               }
             />
             <Route
-              path='/add'
+              path="/add"
               element={<AddQuiz onAddQuiz={handleAddQuiz} quizzes={quizzes} />}
             />
             <Route
-              path='/quiz/:id'
+              path="/quiz/:id"
               element={
                 <QuizContainer
                   addQuestion={handleAddQuestion}
@@ -115,13 +116,14 @@ const App: React.FC = () => {
               }
             />
             <Route
-              path='/quiz/:id/add-question'
+              path="/quiz/:id/add-question"
               element={<AddQuestionForm addQuestion={handleAddQuestion} />}
             />
             <Route
-              path='/quiz/:id/edit-question/:questionIndex'
+              path="/quiz/:id/edit-question/:questionIndex"
               element={<EditQuestionForm editQuestion={handleEditQuestion} />}
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>
