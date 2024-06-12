@@ -52,6 +52,12 @@ const QuizComponent: React.FC<QuizProps> = ({
       >
         Add Question
       </button>
+      <button
+        onClick={() => navigate(`/quiz/${quiz.id}/play`)}
+        className='bg-green-500 text-white p-2 mt-2 ml-2'
+      >
+        Play Quiz
+      </button>
       <ul className='flex flex-col justify-center gap-4 mt-4'>
         {quiz.questions.map((question, index) => (
           <li
