@@ -6,11 +6,16 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 
+import Button, { ButtonProps } from '@mui/material/Button';
+import { purple, green, blue } from '@mui/material/colors';
+import { styled } from '@mui/material/styles';
+
 interface QuizProps {
   quiz: Quiz;
   addQuestion: (question: Question) => void;
   deleteQuestion: (questionIndex: number) => void;
   editQuizTitle: (newTitle: string) => void;
+  buttonSize?: number; // Размер стороны квадратной кнопки в пикселях
 }
 
 const QuizComponent: React.FC<QuizProps> = ({
@@ -18,6 +23,7 @@ const QuizComponent: React.FC<QuizProps> = ({
   addQuestion,
   deleteQuestion,
   editQuizTitle,
+  buttonSize = 100,
 }) => {
   const navigate = useNavigate();
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -66,6 +72,22 @@ const QuizComponent: React.FC<QuizProps> = ({
     setIsEditingTitle(false);
   };
 
+  const ColorButton = styled(Button)<ButtonProps & { buttonSize: number }>(
+    ({ theme, buttonSize }) => ({
+      color: theme.palette.getContrastText(blue[500]),
+      width: buttonSize,
+      height: buttonSize,
+      minWidth: buttonSize,
+      backgroundColor: blue[500],
+      '&:hover': {
+        backgroundColor: blue[300],
+      },
+      '&:focus': {
+        backgroundColor: blue[300],
+      },
+    })
+  );
+
   return (
     <div>
       {isEditingTitle ? (
@@ -102,6 +124,15 @@ const QuizComponent: React.FC<QuizProps> = ({
         >
           Add Question
         </button>
+
+        {/* <ColorButton
+          onClick={handleAddQuestionClick}
+          variant='contained'
+          buttonSize={buttonSize}
+          className='text-white'
+        >
+          Add Question
+        </ColorButton> */}
 
         <button
           onClick={handleTitleEditClick}
