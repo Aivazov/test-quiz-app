@@ -1,4 +1,3 @@
-// src/components/QuizContainer/QuizContainer.tsx
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Quiz, Question } from '../../types';
@@ -8,11 +7,13 @@ import { getQuizzes } from '../../assets/localStorageAsset';
 interface QuizContainerProps {
   addQuestion: (quizId: string, question: Question) => void;
   deleteQuestion: (quizId: string, questionIndex: number) => void;
+  editQuizTitle: (quizId: string, newTitle: string) => void;
 }
 
 const QuizContainer: React.FC<QuizContainerProps> = ({
   addQuestion,
   deleteQuestion,
+  editQuizTitle,
 }) => {
   const { id } = useParams<{ id: string }>();
   const quizzes = getQuizzes();
@@ -27,6 +28,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
       quiz={quiz}
       addQuestion={(question) => addQuestion(quiz.id, question)}
       deleteQuestion={(questionIndex) => deleteQuestion(quiz.id, questionIndex)}
+      editQuizTitle={(newTitle) => editQuizTitle(quiz.id, newTitle)}
     />
   );
 };

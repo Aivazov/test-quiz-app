@@ -10,14 +10,18 @@ interface QuizProps {
   quiz: Quiz;
   addQuestion: (question: Question) => void;
   deleteQuestion: (questionIndex: number) => void;
+  editQuizTitle: (newTitle: string) => void;
 }
 
 const QuizComponent: React.FC<QuizProps> = ({
   quiz,
   addQuestion,
   deleteQuestion,
+  editQuizTitle,
 }) => {
   const navigate = useNavigate();
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [newTitle, setNewTitle] = useState(quiz.title);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [questionIndexToDelete, setQuestionIndexToDelete] = useState<
     number | null
@@ -43,9 +47,59 @@ const QuizComponent: React.FC<QuizProps> = ({
     setIsModalOpen(false);
   };
 
+  const handleTitleEditClick = () => {
+    setIsEditingTitle(true);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(e.target.value);
+  };
+
+  const handleTitleSave = () => {
+    // editQuizTitle(quiz.id, newTitle);
+    editQuizTitle(newTitle);
+    setIsEditingTitle(false);
+  };
+
+  const handleTitleCancel = () => {
+    setNewTitle(quiz.title);
+    setIsEditingTitle(false);
+  };
+
   return (
     <div>
-      <h2 className='text-3xl w-[40%]'>{quiz.title}</h2>
+      {isEditingTitle ? (
+        <div className='flex items-center mb-4'>
+          <input
+            type='text'
+            value={newTitle}
+            onChange={handleTitleChange}
+            className='border-2 border-black p-1 text-xl mr-2'
+          />
+          <button
+            onClick={handleTitleSave}
+            className='bg-blue-500 text-white p-2 mr-2'
+          >
+            Save
+          </button>
+          <button
+            onClick={handleTitleCancel}
+            className='bg-gray-500 text-white p-2'
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className='flex items-center mb-4'>
+          <h2 className='text-3xl w-[40%]'>{quiz.title}</h2>
+          <button
+            onClick={handleTitleEditClick}
+            className='bg-yellow-500 text-white p-2 ml-2'
+          >
+            Edit Title
+          </button>
+        </div>
+      )}
       <button
         onClick={handleAddQuestionClick}
         className='bg-blue-500 text-white p-2 mt-2'

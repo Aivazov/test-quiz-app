@@ -57,6 +57,18 @@ const App: React.FC = () => {
     setQuizzes(updatedQuizzes);
   };
 
+  const handleEditQuizTitle = (quizId: string, newTitle: string) => {
+    const updatedQuizzes = quizzes.map((quiz) => {
+      if (quiz.id === quizId) {
+        const updatedQuiz = { ...quiz, title: newTitle };
+        editQuiz(quizId, newTitle, updatedQuiz.questions);
+        return updatedQuiz;
+      }
+      return quiz;
+    });
+    setQuizzes(updatedQuizzes);
+  };
+
   const handleEditQuestion = (
     quizId: string,
     questionIndex: number,
@@ -113,6 +125,7 @@ const App: React.FC = () => {
                 <QuizContainer
                   addQuestion={handleAddQuestion}
                   deleteQuestion={handleDeleteQuestion}
+                  editQuizTitle={handleEditQuizTitle}
                 />
               }
             />

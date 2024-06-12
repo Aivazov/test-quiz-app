@@ -33,6 +33,8 @@ export const editQuiz = (
   localStorage.setItem('quizzes', JSON.stringify(updatedQuizzes));
 };
 
+
+
 export const deleteQuiz = (id: string): void => {
   const quizzes = getQuizzes();
   const updatedQuizzes = quizzes.filter((quiz) => quiz.id !== id);
