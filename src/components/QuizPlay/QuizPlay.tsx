@@ -1,7 +1,7 @@
 // src/components/QuizPlay/QuizPlay.tsx
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Quiz, Question } from '../../types';
+// import { Quiz, Question } from '../../types';
 import { getQuizzes } from '../../assets/localStorageAsset';
 
 const QuizPlay: React.FC = () => {

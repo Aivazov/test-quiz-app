@@ -74,7 +74,7 @@ const QuizComponent: React.FC<QuizProps> = ({
             type='text'
             value={newTitle}
             onChange={handleTitleChange}
-            className='border-2 border-black p-1 text-xl mr-2'
+            className='border-2 border-none text-3xl mr-2'
           />
           <button
             onClick={handleTitleSave}
@@ -92,27 +92,31 @@ const QuizComponent: React.FC<QuizProps> = ({
       ) : (
         <div className='flex items-center mb-4'>
           <h2 className='text-3xl w-[40%]'>{quiz.title}</h2>
-          <button
-            onClick={handleTitleEditClick}
-            className='bg-yellow-500 text-white p-2 ml-2'
-          >
-            Edit Title
-          </button>
         </div>
       )}
-      <button
-        onClick={handleAddQuestionClick}
-        className='bg-blue-500 text-white p-2 mt-2'
-      >
-        Add Question
-      </button>
-      <button
-        onClick={() => navigate(`/quiz/${quiz.id}/play`)}
-        className='bg-green-500 text-white p-2 mt-2 ml-2'
-      >
-        Play Quiz
-      </button>
-      <ul className='flex flex-col justify-center gap-4 mt-4'>
+
+      <div className='flex gap-4 items-center'>
+        <button
+          onClick={handleAddQuestionClick}
+          className='bg-blue-500 text-white p-2 rounded-[5px]'
+        >
+          Add Question
+        </button>
+
+        <button
+          onClick={handleTitleEditClick}
+          className='bg-yellow-500 text-black p-2 flex gap-2 items-center rounded-[5px]'
+        >
+          <MdOutlineModeEditOutline /> <span>Edit Title</span>
+        </button>
+        <button
+          onClick={() => navigate(`/quiz/${quiz.id}/play`)}
+          className='bg-green-500 text-white p-2 ml-2 rounded-[5px]'
+        >
+          Play Quiz
+        </button>
+      </div>
+      <ul className='flex flex-col justify-center gap-4 mt-6'>
         {quiz.questions.map((question, index) => (
           <li
             key={index}
