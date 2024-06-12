@@ -102,16 +102,18 @@ const EditQuestionForm: React.FC<EditQuestionFormProps> = ({
           Correct
         </div>
       ))}
-      <button
-        type='button'
-        onClick={handleAddAnswer}
-        className='bg-blue-500 text-white p-2 mt-2'
-      >
-        Add Answer
-      </button>
-      <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
-        Apply
-      </button>
+      <div className='flex items-center gap-4'>
+        <button
+          type='button'
+          onClick={handleAddAnswer}
+          className='bg-blue-500 text-white p-2 mt-2'
+        >
+          Add Answer
+        </button>
+        <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
+          Apply
+        </button>
+      </div>
     </form>
   );
 };

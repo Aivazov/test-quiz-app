@@ -42,19 +42,19 @@ const QuizComponent: React.FC<QuizProps> = ({
     setIsModalOpen(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (questionIndexToDelete !== null) {
       deleteQuestion(questionIndexToDelete);
     }
-    setIsModalOpen(false);
+    await setIsModalOpen(false);
   };
 
   const handleCancelDelete = () => {
     setIsModalOpen(false);
   };
 
-  const handleTitleEditClick = () => {
-    setIsEditingTitle(true);
+  const handleTitleEditClick = async () => {
+    await setIsEditingTitle(true);
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
