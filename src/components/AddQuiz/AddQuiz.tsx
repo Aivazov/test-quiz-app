@@ -1,8 +1,9 @@
 // src/components/AddQuiz.tsx
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Quiz } from '../../types';
-import { addQuiz } from '../../assets/localStorageAsset';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Quiz } from "../../types";
+import { addQuiz } from "../../assets/localStorageAsset";
+import ApplyBtn from "../Buttons/ApplyBtn/ApplyBtn";
 
 interface AddQuizProps {
   onAddQuiz: (quiz: Quiz) => void;
@@ -10,15 +11,15 @@ interface AddQuizProps {
 }
 
 const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
-  const [title, setTitle] = React.useState('');
+  const [title, setTitle] = React.useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     //checking if Quiz Input Value field is empty
-    if (title.trim() === '') {
-      alert('No quiz title');
+    if (title.trim() === "") {
+      alert("No quiz title");
       return;
     }
 
@@ -27,8 +28,8 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
       (quiz) => quiz.title.toLowerCase() === title.toLowerCase()
     );
     if (isDuplicateTitle) {
-      console.log('Quiz with this title already exists');
-      alert('Quiz with this title already exists');
+      console.log("Quiz with this title already exists");
+      alert("Quiz with this title already exists");
       return;
     }
 
@@ -40,7 +41,7 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
     };
     addQuiz(newQuiz);
     onAddQuiz(newQuiz);
-    setTitle('');
+    setTitle("");
     navigate(`/quiz/${newQuiz.id}`); //redirect to Quiz editing component
   };
 
@@ -55,9 +56,10 @@ const AddQuiz: React.FC<AddQuizProps> = ({ onAddQuiz, quizzes }) => {
           className='border p-2 w-full'
         />
       </div>
-      <button type='submit' className='bg-blue-500 text-white p-2'>
+      <ApplyBtn btnName='Add Quiz' />
+      {/* <button type='submit' className='bg-blue-500 text-white p-2'>
         Add Quiz
-      </button>
+      </button> */}
     </form>
   );
 };

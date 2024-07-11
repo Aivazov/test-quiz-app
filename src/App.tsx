@@ -1,21 +1,21 @@
 // src/App.tsx
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import QuizList from './components/QuizList/QuizList';
-import AddQuiz from './components/AddQuiz/AddQuiz';
-import QuizContainer from './components/QuizContainer/QuizContainer';
-import AddQuestionForm from './components/AddQuestion/AddQuestionForm';
-import EditQuestionForm from './components/EditQuestionForm/EditQuestionForm';
-import { Quiz, Question } from './types';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import QuizList from "./components/QuizList/QuizList";
+import AddQuiz from "./components/AddQuiz/AddQuiz";
+import QuizContainer from "./components/QuizContainer/QuizContainer";
+import AddQuestionForm from "./components/AddQuestion/AddQuestionForm";
+import EditQuestionForm from "./components/EditQuestionForm/EditQuestionForm";
+import { Quiz, Question } from "./types";
 import {
   getQuizzes,
   addQuiz,
   deleteQuiz,
   editQuiz,
-} from './assets/localStorageAsset';
-import Header from './components/Header/Header';
-import NotFound from './pages/NotFound';
-import QuizPlay from './components/QuizPlay/QuizPlay';
+} from "./assets/localStorageAsset";
+import Header from "./components/Header/Header";
+import NotFound from "./pages/NotFound";
+import QuizPlay from "./components/QuizPlay/QuizPlay";
 
 const App: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
   const handleDeleteQuiz = (id: string) => {
     const isDeleting = window.confirm(
-      'Are you sure you want to delete this Quiz?'
+      "Are you sure you want to delete this Quiz?"
     );
     if (isDeleting) {
       deleteQuiz(id);
@@ -105,7 +105,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className='container mx-auto p-4 flex flex-row w-full'>
+      <div className='container p-4 flex flex-row w-full'>
         <Header />
         <main className='py-[10px] px-[30px] w-full'>
           <Routes>

@@ -1,8 +1,10 @@
 // src/components/EditQuestionForm/EditQuestionForm.tsx
-import React from 'react';
-import { Question, Answer } from '../../types';
-import { useNavigate, useParams } from 'react-router-dom';
-import { getQuizzes } from '../../assets/localStorageAsset';
+import React from "react";
+import { Question, Answer } from "../../types";
+import { useNavigate, useParams } from "react-router-dom";
+import { getQuizzes } from "../../assets/localStorageAsset";
+import AddBtn from "../Buttons/AddBtn/AddBtn";
+import ApplyBtn from "../Buttons/ApplyBtn/ApplyBtn";
 
 interface EditQuestionFormProps {
   editQuestion: (
@@ -20,9 +22,9 @@ const EditQuestionForm: React.FC<EditQuestionFormProps> = ({
     questionIndex: string;
   }>();
   const navigate = useNavigate();
-  const [questionText, setQuestionText] = React.useState('');
+  const [questionText, setQuestionText] = React.useState("");
   const [answers, setAnswers] = React.useState<Answer[]>([
-    { text: '', isCorrect: false },
+    { text: "", isCorrect: false },
   ]);
   const [correctAnswerIndex, setCorrectAnswerIndex] = React.useState<
     number | null
@@ -46,7 +48,7 @@ const EditQuestionForm: React.FC<EditQuestionFormProps> = ({
   };
 
   const handleAddAnswer = () => {
-    setAnswers([...answers, { text: '', isCorrect: false }]);
+    setAnswers([...answers, { text: "", isCorrect: false }]);
   };
 
   const handleCorrectAnswerChange = (index: number) => {
@@ -56,7 +58,7 @@ const EditQuestionForm: React.FC<EditQuestionFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (correctAnswerIndex === null) {
-      alert('Please select the correct answer');
+      alert("Please select the correct answer");
       return;
     }
     const updatedAnswers = answers.map((answer, index) => ({
@@ -103,16 +105,19 @@ const EditQuestionForm: React.FC<EditQuestionFormProps> = ({
         </div>
       ))}
       <div className='flex items-center gap-4'>
-        <button
+        <AddBtn btnName='Add Answer' handleFunc={handleAddAnswer} />
+        <ApplyBtn btnName='Apply' />
+
+        {/* <button
           type='button'
           onClick={handleAddAnswer}
           className='bg-blue-500 text-white p-2 mt-2'
         >
           Add Answer
-        </button>
-        <button type='submit' className='bg-green-500 text-white p-2 mt-2'>
+        </button> */}
+        {/* <button type='submit' className='bg-green-500 text-white p-2'>
           Apply
-        </button>
+        </button> */}
       </div>
     </form>
   );

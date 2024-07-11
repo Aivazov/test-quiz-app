@@ -1,14 +1,15 @@
 // src/components/QuizComponent/QuizComponent.tsx
-import React, { useState } from 'react';
-import { Quiz, Question } from '../../types';
-import { Link, useNavigate } from 'react-router-dom';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { MdOutlineModeEditOutline } from 'react-icons/md';
-import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import React, { useState } from "react";
+import { Quiz, Question } from "../../types";
+import { Link, useNavigate } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
-import Button, { ButtonProps } from '@mui/material/Button';
-import { purple, green, blue } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
+import Button, { ButtonProps } from "@mui/material/Button";
+import { purple, green, blue } from "@mui/material/colors";
+import { styled } from "@mui/material/styles";
+import AddBtn from "../Buttons/AddBtn/AddBtn";
 
 interface QuizProps {
   quiz: Quiz;
@@ -79,10 +80,10 @@ const QuizComponent: React.FC<QuizProps> = ({
       height: buttonSize,
       minWidth: buttonSize,
       backgroundColor: blue[500],
-      '&:hover': {
+      "&:hover": {
         backgroundColor: blue[300],
       },
-      '&:focus': {
+      "&:focus": {
         backgroundColor: blue[300],
       },
     })
@@ -118,12 +119,14 @@ const QuizComponent: React.FC<QuizProps> = ({
       )}
 
       <div className='flex gap-4 items-center'>
-        <button
+        <AddBtn btnName='Add Question' handleFunc={handleAddQuestionClick} />
+
+        {/* <button
           onClick={handleAddQuestionClick}
           className='bg-blue-500 text-white p-2 rounded-[5px]'
         >
           Add Question
-        </button>
+        </button> */}
 
         {/* <ColorButton
           onClick={handleAddQuestionClick}
@@ -140,12 +143,14 @@ const QuizComponent: React.FC<QuizProps> = ({
         >
           <MdOutlineModeEditOutline /> <span>Edit Title</span>
         </button>
-        <button
-          onClick={() => navigate(`/quiz/${quiz.id}/play`)}
-          className='bg-green-500 text-white p-2 ml-2 rounded-[5px]'
-        >
-          Play Quiz
-        </button>
+        {quiz.questions.length > 0 && (
+          <button
+            onClick={() => navigate(`/quiz/${quiz.id}/play`)}
+            className='bg-green-500 text-white p-2 ml-2 rounded-[5px]'
+          >
+            Play Quiz
+          </button>
+        )}
       </div>
       <ul className='flex flex-col justify-center gap-4 mt-6'>
         {quiz.questions.map((question, index) => (
