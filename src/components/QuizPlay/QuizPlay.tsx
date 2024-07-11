@@ -1,8 +1,9 @@
 // src/components/QuizPlay/QuizPlay.tsx
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 // import { Quiz, Question } from '../../types';
-import { getQuizzes } from '../../assets/localStorageAsset';
+import { getQuizzes } from "../../assets/localStorageAsset";
+import AddBtn from "../Buttons/AddBtn/AddBtn";
 
 const QuizPlay: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,12 +50,14 @@ const QuizPlay: React.FC = () => {
         <p className='text-xl'>
           Your score: {score} / {quiz.questions.length}
         </p>
-        <button
-          onClick={() => navigate('/')}
+        <AddBtn btnName='Back to Quiz List' handleFunc={() => navigate("/")} />
+
+        {/* <button
+          onClick={() => navigate("/")}
           className='bg-blue-500 text-white p-2 mt-2'
         >
           Back to Quiz List
-        </button>
+        </button> */}
       </div>
     );
   }
@@ -92,19 +95,21 @@ const QuizPlay: React.FC = () => {
           Previous
         </button>
         {currentQuestionIndex < quiz.questions.length - 1 ? (
-          <button
-            onClick={handleNextQuestion}
-            className='bg-blue-500 text-white p-2'
-          >
-            Next
-          </button>
+          <AddBtn btnName='Next' handleFunc={handleNextQuestion} />
         ) : (
-          <button
-            onClick={handleFinishQuiz}
-            className='bg-green-500 text-white p-2'
-          >
-            Finish
-          </button>
+          // <button
+          //   onClick={handleNextQuestion}
+          //   className='bg-blue-500 text-white p-2'
+          // >
+          //   Next
+          // </button>
+          <AddBtn btnName='Finish' handleFunc={handleFinishQuiz} />
+          // <button
+          //   onClick={handleFinishQuiz}
+          //   className='bg-green-500 text-white p-2'
+          // >
+          //   Finish
+          // </button>
         )}
       </div>
     </div>

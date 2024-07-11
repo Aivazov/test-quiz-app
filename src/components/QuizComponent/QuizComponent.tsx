@@ -10,6 +10,7 @@ import Button, { ButtonProps } from "@mui/material/Button";
 import { purple, green, blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import AddBtn from "../Buttons/AddBtn/AddBtn";
+import GrayBtn from "../Buttons/GrayBtn/GrayBtn";
 
 interface QuizProps {
   quiz: Quiz;
@@ -92,25 +93,27 @@ const QuizComponent: React.FC<QuizProps> = ({
   return (
     <div>
       {isEditingTitle ? (
-        <div className='flex items-center mb-4'>
+        <div className='flex items-center mb-4 gap-2'>
           <input
             type='text'
             value={newTitle}
             onChange={handleTitleChange}
             className='border-2 border-none text-3xl mr-2'
           />
-          <button
+          <AddBtn btnName='Save' handleFunc={handleTitleSave} />
+          <GrayBtn btnName='Cancel' handleFunc={handleTitleCancel} />
+          {/* <button
             onClick={handleTitleSave}
             className='bg-blue-500 text-white p-2 mr-2'
           >
             Save
-          </button>
-          <button
+          </button> */}
+          {/* <button
             onClick={handleTitleCancel}
-            className='bg-gray-500 text-white p-2'
+            className='bg-gray-500 text-white p-2 rounded-[5px]'
           >
             Cancel
-          </button>
+          </button> */}
         </div>
       ) : (
         <div className='flex items-center mb-4'>
